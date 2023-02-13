@@ -1,0 +1,59 @@
+CLASS zcx_tms_monster_exception DEFINITION
+  PUBLIC
+  INHERITING FROM cx_static_check
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+
+    INTERFACES if_t100_dyn_msg .
+    INTERFACES if_t100_message .
+
+    CONSTANTS:
+      BEGIN OF cx_sy_dynamic_osql_error,
+        msgid TYPE symsgid VALUE 'ZTMS_MONSTER_EXCP',
+        msgno TYPE symsgno VALUE '000',
+        attr1 TYPE scx_attrname VALUE 'GV_ATTR1',
+        attr2 TYPE scx_attrname VALUE 'GV_ATTR2',
+        attr3 TYPE scx_attrname VALUE 'GV_ATTR3',
+        attr4 TYPE scx_attrname VALUE 'GV_ATTR4',
+      END OF cx_sy_dynamic_osql_error .
+
+    METHODS constructor
+      IMPORTING
+        !textid   LIKE if_t100_message=>t100key OPTIONAL
+        !previous LIKE previous OPTIONAL
+        !iv_attr1 TYPE scx_attrname OPTIONAL
+        !iv_attr2 TYPE scx_attrname OPTIONAL
+        !iv_attr3 TYPE scx_attrname OPTIONAL
+        !iv_attr4 TYPE scx_attrname OPTIONAL .
+    DATA gv_attr1 TYPE scx_attrname .
+    DATA gv_attr2 TYPE scx_attrname .
+    DATA gv_attr3 TYPE scx_attrname .
+    DATA gv_attr4 TYPE scx_attrname .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcx_tms_monster_exception IMPLEMENTATION.
+
+
+  METHOD constructor ##ADT_SUPPRESS_GENERATION.
+    CALL METHOD super->constructor
+      EXPORTING
+        previous = previous.
+    CLEAR me->textid.
+    IF textid IS INITIAL.
+      if_t100_message~t100key = if_t100_message=>default_textid.
+    ELSE.
+      if_t100_message~t100key = textid.
+    ENDIF.
+
+    me->gv_attr1 = iv_attr1.
+    me->gv_attr2 = iv_attr2.
+    me->gv_attr3 = iv_attr3.
+    me->gv_attr4 = iv_attr4.
+  ENDMETHOD.
+ENDCLASS.

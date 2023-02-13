@@ -1,0 +1,36 @@
+INTERFACE zif_monster_service
+  PUBLIC .
+
+  TYPES: BEGIN OF gty_s_monster_details,
+           color         TYPE string,
+           scare_scoring TYPE i,
+         END OF gty_s_monster_details.
+
+  TYPES: BEGIN OF gty_s_monster,
+           id      TYPE bu_partner,
+           details TYPE gty_s_monster_details,
+           owner   TYPE uname,
+         END OF gty_s_monster.
+  TYPES gty_t_monster TYPE STANDARD TABLE OF gty_s_monster WITH KEY id.
+**********************************************************************
+* Aquí se declaran los métodos que todos los servicios relacionados
+* con los monstruos deben tener.
+**********************************************************************
+  METHODS select_monster
+    IMPORTING ir_monster_id      TYPE rpfifr_partner_rangetabletype OPTIONAL
+              ir_user_id_range   TYPE issr_r_uname OPTIONAL
+    RETURNING VALUE(rt_monsters) TYPE zif_monster_service=>gty_t_monster.
+  METHODS create_monster
+    IMPORTING is_monster TYPE zif_monster_service=>gty_s_monster
+    RAISING   zcx_tms_monster_exception.
+  METHODS modify_monster
+    IMPORTING is_monster TYPE zif_monster_service=>gty_s_monster
+    RAISING   zcx_tms_monster_exception.
+  METHODS delete_monster
+    IMPORTING is_monster TYPE zif_monster_service=>gty_s_monster
+    RAISING   zcx_tms_monster_exception.
+  METHODS purchase_monster
+    IMPORTING is_monster TYPE zif_monster_service=>gty_s_monster
+    RAISING   zcx_tms_monster_exception.
+
+ENDINTERFACE.

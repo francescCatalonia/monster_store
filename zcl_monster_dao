@@ -1,11 +1,11 @@
-CLASS zcl_monster_database DEFINITION
+CLASS zcl_monster_dao DEFINITION
   PUBLIC
   FINAL
   CREATE PUBLIC .
 
   PUBLIC SECTION.
 
-    INTERFACES zif_monster_service .
+    INTERFACES zif_monster_srv .
 
     ALIASES select_monster FOR zif_monster_service~select_monster.
     ALIASES create_monster FOR zif_monster_service~create_monster.
@@ -19,7 +19,7 @@ ENDCLASS.
 
 
 
-CLASS zcl_monster_database IMPLEMENTATION.
+CLASS zcl_monster_dao IMPLEMENTATION.
   METHOD select_monster.
 
   ENDMETHOD.

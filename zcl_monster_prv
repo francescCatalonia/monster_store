@@ -1,0 +1,25 @@
+CLASS zcl_monster_prv DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
+
+  PUBLIC SECTION.
+    CLASS-METHODS factory
+      RETURNING VALUE(ro_monster_srv) TYPE REF TO zif_monster_srv.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
+ENDCLASS.
+
+
+
+CLASS zcl_monster_prv IMPLEMENTATION.
+  METHOD factory.
+**********************************************************************
+* Esta función tiene la lógica necesaria para determinar que clase
+* se debe devolver según N criterios. Estas clases deben implementar
+* la interfaz ZIF_MONSTER_SRV.
+**********************************************************************
+    ro_monster_service = NEW zcl_monster_dao( ).
+
+  ENDMETHOD.
+ENDCLASS.
